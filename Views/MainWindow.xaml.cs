@@ -1,19 +1,21 @@
 ﻿using System.Windows;
+using WpfPostApp.Services;
 using WpfPostApp.ViewModel;
 
 namespace WpfPostApp
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
-            var MainViewModel = new MainViewModel();
-            MainViewModel.LoadPostsCommand.ExecuteAsync(null);
+            // Inject post service
+            var postService = new JsonPlaceholderPostService();
 
-            DataContext = MainViewModel;
+            var mainViewModel = new MainViewModel(postService) { NumberOfPosts = 100 };
+            // Initial load for posts
+            mainViewModel.LoadPostsCommand.ExecuteAsync(null);
+
+            DataContext = mainViewModel;
 
             InitializeComponent();
         }
@@ -45,7 +47,7 @@ namespace WpfPostApp
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            // Close();
+            // Not using Close() in case there's multiple windows one day
             Application.Current.Shutdown();
         }
     }

@@ -1,46 +1,66 @@
 ﻿using System.Collections.ObjectModel;
-using System.Net.Http;
-using System.Net.Http.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WpfPostApp.Models;
+using WpfPostApp.Services;
 
 namespace WpfPostApp.ViewModel;
 
 public class MainViewModel : ObservableObject
 {
-    private readonly HttpClient _httpClient;
+    #region Fields
 
-    private bool showUserId = false;
+    public int NumberOfPosts { get; set; } = 100;
+
+    private readonly IPostService _postService;
+
+    // true : show userID | false : show postId
+    private bool showUserId;
     public bool ShowUserId
     {
         get => showUserId;
         set => SetProperty(ref showUserId, value);
     }
 
-    private ObservableCollection<Post>? posts = [];
-    public ObservableCollection<Post>? Posts
+    private ObservableCollection<Post> posts;
+    public ObservableCollection<Post> Posts
     {
         get => posts;
         set => SetProperty(ref posts, value);
     }
 
-    // test
-
-    public MainViewModel()
+    private int nCols;
+    public int NCols
     {
-        _httpClient = new HttpClient
-        {
-            BaseAddress = new Uri("https://jsonplaceholder.typicode.com"),
-        };
-
-        ChangeShownIdCommand = new RelayCommand(ChangeShownId);
-        LoadPostsCommand = new AsyncRelayCommand(LoadPosts);
+        get => nCols;
+        set => SetProperty(ref nCols, value);
     }
 
+    private int nRows;
+    public int NRows
+    {
+        get => nRows;
+        set => SetProperty(ref nRows, value);
+    }
+
+    #endregion
+
+    public MainViewModel(IPostService postService)
+    {
+        _postService = postService ?? throw new ArgumentNullException(nameof(postService));
+        ChangeShownIdCommand = new RelayCommand(ChangeShownId);
+        LoadPostsCommand = new AsyncRelayCommand(LoadPosts);
+        posts = [];
+        showUserId = false;
+    }
+
+    #region Commands
     public RelayCommand ChangeShownIdCommand { get; }
     public AsyncRelayCommand LoadPostsCommand { get; }
 
+    #endregion
+
+    #region Methods
     private void ChangeShownId()
     {
         ShowUserId = !ShowUserId;
@@ -48,19 +68,23 @@ public class MainViewModel : ObservableObject
 
     private async Task LoadPosts()
     {
-        var posts = await _httpClient.GetFromJsonAsync<ObservableCollection<Post>>(
-            "posts?_limit=100"
-        );
+        var posts = await _postService.GetPostsAsync(NumberOfPosts);
 
-        if (posts == null)
-            return;
+        (NRows, NCols) = CalculateGridSizes(posts.Count);
 
         Posts = posts;
-
         //Posts?.Clear();
         //foreach (var post in posts)
         //{
         //    Posts.Add(post);
         //}
     }
+
+    internal static (int, int) CalculateGridSizes(int numberOfItems)
+    {
+        var result = Convert.ToInt32(Math.Ceiling(Math.Sqrt(numberOfItems)));
+        return (result, result);
+    }
+
+    #endregion
 }

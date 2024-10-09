@@ -5,7 +5,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:local="clr-namespace:WpfPostApp"
         mc:Ignorable="d"
-        Title="MainWindow" WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown" AllowsTransparency="True" Height="900" Width="900">
+        Title="MainWindow" WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown" AllowsTransparency="True" Height="950" Width="900">
     <Window.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
@@ -121,7 +121,7 @@
             <ItemsControl ItemsSource="{Binding Posts}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Rows="10" Columns="10" />
+                        <UniformGrid Rows="{Binding DataContext.NRows, RelativeSource={RelativeSource AncestorType=Window}}" Columns="{Binding DataContext.NCols, RelativeSource={RelativeSource AncestorType=Window}}" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
@@ -136,7 +136,7 @@
                                             <RowDefinition Height="*" />
                                         </Grid.RowDefinitions>
                                         <StackPanel Grid.Row="0" VerticalAlignment="Top" Margin="5">
-                                            <TextBlock>
+                                            <TextBlock  Foreground="#4b4d52">
                                                 <TextBlock.Style>
                                                     <Style TargetType="TextBlock">
                                                         <Setter Property="Visibility" Value="Collapsed" />
