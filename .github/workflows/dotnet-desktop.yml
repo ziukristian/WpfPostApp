@@ -1,0 +1,38 @@
+name: Build and Release WPF Executable
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'  # Use .NET 8.0
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:CopyOutputSymbolsToPublishDirectory=false -p:PublishDir=./out
+
+    - name: Create ZIP Archive
+      run: |
+        Compress-Archive -Path ./out/WpfPostApp.exe -DestinationPath ./out/WpfPostApp.zip
+
+    - name: Upload ZIP to Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: ./out/WpfPostApp.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Clean up
+      run: Remove-Item -Recurse -Force ./out
