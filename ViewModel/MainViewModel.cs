@@ -10,8 +10,6 @@ public class MainViewModel : ObservableObject
 {
     #region Fields
 
-    public int NumberOfPosts { get; set; } = 100;
-
     private readonly IPostService _postService;
 
     // true : show userID | false : show postId
@@ -68,16 +66,11 @@ public class MainViewModel : ObservableObject
 
     private async Task LoadPosts()
     {
-        var posts = await _postService.GetPostsAsync(NumberOfPosts);
+        var posts = await _postService.GetPostsAsync();
 
         (NRows, NCols) = CalculateGridSizes(posts.Count);
 
         Posts = posts;
-        //Posts?.Clear();
-        //foreach (var post in posts)
-        //{
-        //    Posts.Add(post);
-        //}
     }
 
     internal static (int, int) CalculateGridSizes(int numberOfItems)

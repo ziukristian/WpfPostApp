@@ -101,7 +101,7 @@
         </Style>
     </Window.Resources>
     <Window.Background>
-        <SolidColorBrush Opacity="0.7" Color="#333333"/>
+        <SolidColorBrush Opacity="0.8" Color="#333333"/>
     </Window.Background>
     <!--<Window.Resources><Style TargetType="ScrollBar"><Setter Property="Background" Value="inv"/></Style></Window.Resources>-->
     <WindowChrome.WindowChrome>
@@ -112,10 +112,10 @@
             <RowDefinition Height="30"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="0">
-            <Button Style="{DynamicResource CustomButtonStyle}" x:Name="btnMinimize" Content="🗕" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" Width="25" Height="25" Click="btnMinimize_Click"></Button>
-            <Button Style="{DynamicResource CustomButtonStyle}" x:Name="btnMaximize" Content="🗖" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" Width="25" Height="25" Click="btnMaximize_Click"></Button>
-            <Button Style="{DynamicResource CloseButtonStyle}" x:Name="btnClose" Content="🗙" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" Width="25" Height="25" Click="btnClose_Click"></Button>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="0" Margin="2">
+            <Button Style="{DynamicResource CustomButtonStyle}" x:Name="btnMinimize" Content="🗕" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" Width="25" Height="25" Click="BtnMinimize_Click"></Button>
+            <Button Style="{DynamicResource CustomButtonStyle}" x:Name="btnMaximize" Content="🗖" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" Width="25" Height="25" Click="BtnMaximize_Click"></Button>
+            <Button Style="{DynamicResource CloseButtonStyle}" x:Name="btnClose" Content="🗙" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" Width="25" Height="25" Click="BtnClose_Click"></Button>
         </StackPanel>
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" Margin="3">
             <ItemsControl ItemsSource="{Binding Posts}">
@@ -129,24 +129,24 @@
                         <Viewbox Stretch="Uniform">
                             <Border BorderBrush="Black" BorderThickness="1" Margin="2" Width="100" Height="100"  >
                                 <Button Style="{DynamicResource CustomButtonStyle}" Command="{Binding DataContext.ChangeShownIdCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                             CommandParameter="{Binding}" Background="#333333" BorderThickness="0">
+                             CommandParameter="{Binding}" Background="#4b4d52" BorderThickness="0">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="*" />
                                         </Grid.RowDefinitions>
                                         <StackPanel Grid.Row="0" VerticalAlignment="Top" Margin="5">
-                                            <TextBlock  Foreground="#4b4d52">
+                                            <TextBlock>
                                                 <TextBlock.Style>
                                                     <Style TargetType="TextBlock">
                                                         <Setter Property="Visibility" Value="Collapsed" />
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding DataContext.ShowUserId, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
-                                                                <Setter Property="Text" Value="{Binding UserId}" />
+                                                                <Setter Property="Text" Value="{Binding UserId, StringFormat='User ID: {0}'}" />
                                                                 <Setter Property="Visibility" Value="Visible" />
                                                             </DataTrigger>
                                                             <DataTrigger Binding="{Binding DataContext.ShowUserId, RelativeSource={RelativeSource AncestorType=Window}}" Value="False">
-                                                                <Setter Property="Text" Value="{Binding Id}" />
+                                                                <Setter Property="Text" Value="{Binding Id, StringFormat='Post ID: {0}'}" />
                                                                 <Setter Property="Visibility" Value="Visible" />
                                                             </DataTrigger>
                                                         </Style.Triggers>

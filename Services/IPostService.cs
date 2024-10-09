@@ -6,5 +6,4 @@ namespace WpfPostApp.Services;
 public interface IPostService
 {
     public Task<ObservableCollection<Post>> GetPostsAsync();
-    public Task<ObservableCollection<Post>> GetPostsAsync(int limit);
 }

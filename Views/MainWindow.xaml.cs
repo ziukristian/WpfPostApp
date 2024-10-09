@@ -11,7 +11,7 @@ namespace WpfPostApp
             // Inject post service
             var postService = new JsonPlaceholderPostService();
 
-            var mainViewModel = new MainViewModel(postService) { NumberOfPosts = 100 };
+            var mainViewModel = new MainViewModel(postService);
             // Initial load for posts
             mainViewModel.LoadPostsCommand.ExecuteAsync(null);
 
@@ -28,12 +28,12 @@ namespace WpfPostApp
             DragMove();
         }
 
-        private void btnMinimize_Click(object sender, RoutedEventArgs e)
+        private void BtnMinimize_Click(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
         }
 
-        private void btnMaximize_Click(object sender, RoutedEventArgs e)
+        private void BtnMaximize_Click(object sender, RoutedEventArgs e)
         {
             if (WindowState == WindowState.Maximized)
             {
@@ -45,7 +45,7 @@ namespace WpfPostApp
             }
         }
 
-        private void btnClose_Click(object sender, RoutedEventArgs e)
+        private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
             // Not using Close() in case there's multiple windows one day
             Application.Current.Shutdown();
