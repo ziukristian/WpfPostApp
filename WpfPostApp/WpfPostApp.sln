@@ -5,7 +5,14 @@ VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfPostApp", "WpfPostApp.csproj", "{DA05C674-5A7C-493A-9278-B4DA3DDB97E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfPostApp.Tests", "..\WpfPostApp.Tests\WpfPostApp.Tests.csproj", "{E277D7AF-39B7-421B-A0E5-5B1D08B5FE59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfPostApp.Tests", "..\WpfPostApp.Tests\WpfPostApp.Tests.csproj", "{E277D7AF-39B7-421B-A0E5-5B1D08B5FE59}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E8B42C09-12D9-402E-A820-33E28CD3AB8D}"
+	ProjectSection(SolutionItems) = preProject
+		..\.gitignore = ..\.gitignore
+		..\.github\workflows\dotnet-desktop.yml = ..\.github\workflows\dotnet-desktop.yml
+		..\README.md = ..\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

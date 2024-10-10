@@ -29,7 +29,7 @@ jobs:
 
     # Build the main project
     - name: Build
-      run: dotnet publish ./WpfPostApp/WpfPostApp.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:CopyOutputSymbolsToPublishDirectory=false -p:PublishDir=./WpfPostApp/out
+      run: dotnet publish ./WpfPostApp/WpfPostApp.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:CopyOutputSymbolsToPublishDirectory=false -p:PublishDir=./out
 
     # Create ZIP Archive for distribution
     - name: Create ZIP Archive
