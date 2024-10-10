@@ -43,6 +43,12 @@ public class MainViewModel : ObservableObject
 
     #endregion
 
+    #region Commands
+    public RelayCommand ChangeShownIdCommand { get; }
+    public AsyncRelayCommand LoadPostsCommand { get; }
+
+    #endregion
+
     public MainViewModel(IPostService postService)
     {
         _postService = postService ?? throw new ArgumentNullException(nameof(postService));
@@ -51,12 +57,6 @@ public class MainViewModel : ObservableObject
         posts = [];
         showUserId = false;
     }
-
-    #region Commands
-    public RelayCommand ChangeShownIdCommand { get; }
-    public AsyncRelayCommand LoadPostsCommand { get; }
-
-    #endregion
 
     #region Methods
     private void ChangeShownId()
@@ -68,15 +68,9 @@ public class MainViewModel : ObservableObject
     {
         var posts = await _postService.GetPostsAsync();
 
-        (NRows, NCols) = CalculateGridSizes(posts.Count);
+        (NRows, NCols) = Utility.CalculateGridSizes(posts.Count);
 
         Posts = posts;
-    }
-
-    internal static (int, int) CalculateGridSizes(int numberOfItems)
-    {
-        var result = Convert.ToInt32(Math.Ceiling(Math.Sqrt(numberOfItems)));
-        return (result, result);
     }
 
     #endregion
