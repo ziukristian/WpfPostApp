@@ -17,19 +17,26 @@ jobs:
       with:
         dotnet-version: '8.0.x'
 
+    # Restore dependencies for both the main project and the test project
     - name: Restore dependencies
-      run: dotnet restore ./WpfPostApp/WpfPostApp.csproj
+      run: |
+        dotnet restore ./WpfPostApp/WpfPostApp.csproj
+        dotnet restore ./WpfPostApp.Tests/WpfPostApp.Tests.csproj
 
+    # Run tests after restoring dependencies
     - name: Run Tests
       run: dotnet test ./WpfPostApp.Tests/WpfPostApp.Tests.csproj --no-restore --configuration Release
 
+    # Build the main project
     - name: Build
       run: dotnet publish ./WpfPostApp/WpfPostApp.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:CopyOutputSymbolsToPublishDirectory=false -p:PublishDir=./WpfPostApp/out
 
+    # Create ZIP Archive for distribution
     - name: Create ZIP Archive
       run: |
         Compress-Archive -Path ./WpfPostApp/out/WpfPostApp.exe -DestinationPath ./WpfPostApp/out/WpfPostApp.zip
 
+    # Upload the ZIP to the GitHub Release
     - name: Upload ZIP to Release
       uses: softprops/action-gh-release@v1
       with:
@@ -37,5 +44,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    # Clean up the output directory
     - name: Clean up
       run: Remove-Item -Recurse -Force ./WpfPostApp/out
