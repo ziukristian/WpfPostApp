@@ -3,7 +3,7 @@ using WpfPostApp.Services;
 
 namespace WpfPostApp.Tests;
 
-public class UtilityTests
+public class UtilitiesTests
 {
     [Theory]
     [InlineData(1, 1, 1)]
@@ -21,7 +21,7 @@ public class UtilityTests
     )
     {
         // Act
-        var (rows, cols) = Utility.CalculateGridSizes(numberOfItems);
+        var (rows, cols) = Utilities.CalculateGridSizes(numberOfItems);
 
         // Assert
         rows.Should().Be(expectedRows);

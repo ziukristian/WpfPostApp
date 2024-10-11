@@ -1,6 +1,6 @@
 ﻿namespace WpfPostApp.Services;
 
-public class Utility
+public class Utilities
 {
     public static (int, int) CalculateGridSizes(int numberOfItems)
     {

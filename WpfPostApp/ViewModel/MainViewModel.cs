@@ -68,7 +68,7 @@ public class MainViewModel : ObservableObject
     {
         var posts = await _postService.GetPostsAsync();
 
-        (NRows, NCols) = Utility.CalculateGridSizes(posts.Count);
+        (NRows, NCols) = Utilities.CalculateGridSizes(posts.Count);
 
         Posts = posts;
     }
